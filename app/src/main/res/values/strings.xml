@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">LearnWords</string>
+    <string name="module_title">Module title</string>
+    <string name="term_number">Term number</string>
+    <string name="module_name">Module name</string>
+    <string name="add">Add</string>
+    <string name="description">Description</string>
+    <string name="term">Term</string>
 </resources>
