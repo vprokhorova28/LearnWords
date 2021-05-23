@@ -69,6 +69,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        storeModules();
+    }
+
+    void storeModules(){
+        Cursor cursor = db.readAllModules();
+        if (cursor.getCount() == 0 ){
+            Toast.makeText(this, "ф", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            while (cursor.moveToNext()){
+                modules.add(cursor.getString(0));
+            }
+        }
     }
 
 
@@ -82,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
                 term_id.add(cursor.getString(0));
                 term.add(cursor.getString(1));
                 desc.add(cursor.getString(2));
-                modules.add(cursor.getString(3));
             }
         }
     }

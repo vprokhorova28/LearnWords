@@ -7,20 +7,20 @@
     tools:context=".AddActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/termRecyclerView"
+        android:id="@+id/termRecyclerView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/add_btn"
+        app:layout_constraintBottom_toTopOf="@+id/add_btn2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/module_mame_input" />
+        app:layout_constraintTop_toBottomOf="@+id/module_mame_input2" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addTerm_btn"
+        android:id="@+id/addTerm_btn2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="28dp"
@@ -29,11 +29,11 @@
         android:focusable="true"
         android:src="@drawable/ic_add"
         app:backgroundTint="#ffffff"
-        app:layout_constraintBottom_toTopOf="@+id/add_btn"
-        app:layout_constraintEnd_toEndOf="@+id/termRecyclerView" />
+        app:layout_constraintBottom_toTopOf="@+id/add_btn2"
+        app:layout_constraintEnd_toEndOf="@+id/termRecyclerView2" />
 
     <EditText
-        android:id="@+id/module_mame_input"
+        android:id="@+id/module_mame_input2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/add_btn"
+        android:id="@+id/add_btn2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"

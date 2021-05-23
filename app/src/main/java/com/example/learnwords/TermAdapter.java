@@ -1,11 +1,14 @@
 package com.example.learnwords;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,13 +18,14 @@ import java.util.ArrayList;
 public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder> {
 
     private Context context;
-    private ArrayList id, term, desc;
+    private ArrayList<String> term, desc;
+    private int itemCount = 2;
 
-    TermAdapter(Context context, ArrayList id, ArrayList term, ArrayList desc){
+
+    TermAdapter(Context context){
         this.context = context;
-        this.id = id;
-        this.term = term;
-        this.desc = desc;
+        this.term = new ArrayList<>();
+        this.desc = new ArrayList<>();
     }
 
     @NonNull
@@ -32,15 +36,51 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
         return new TermViewHolder(view);
     }
 
+    public ArrayList<String> getTerm() {
+        return term;
+    }
+
+    public ArrayList<String> getDesc() {
+        return desc;
+    }
+
     @Override
-    public void onBindViewHolder(@NonNull TermViewHolder holder, int position) {
-        EditText term = holder.term;
-        EditText desc = holder.desc;
+    public void onBindViewHolder(@NonNull TermViewHolder holder, final int position) {
+        holder.term.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                term.add(position, s.toString());
+            }
+        });
+        holder.desc.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                desc.add(position, s.toString());
+            }
+        });
+    }
+
+    public void setItemCount(int itemCount) {
+        this.itemCount = itemCount;
     }
 
     @Override
     public int getItemCount() {
-        return id.size();
+        return itemCount;
     }
 
     public class TermViewHolder extends RecyclerView.ViewHolder {
