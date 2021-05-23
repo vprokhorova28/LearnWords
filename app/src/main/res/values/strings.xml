@@ -7,4 +7,6 @@
     <string name="description">Description</string>
     <string name="term">Term</string>
     <string name="update">Uptade</string>
+    <string name="delete_all">delete all</string>
+    <string name="add_first_module">Add your first module</string>
 </resources>

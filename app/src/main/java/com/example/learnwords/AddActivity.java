@@ -4,13 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -37,15 +35,15 @@ public class AddActivity extends AppCompatActivity {
         termRecyclerView.setAdapter(termAdapter);
         termRecyclerView.setLayoutManager(new LinearLayoutManager(AddActivity.this));
 
-        terms = termAdapter.getTerm();
-        descs = termAdapter.getDesc();
+        terms = termAdapter.getTerms();
+        descs = termAdapter.getDescs();
 
         addBtn = findViewById(R.id.add_btn);
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DatabaseHelper db = new DatabaseHelper(AddActivity.this);
-                for (int i = 0; i < termAdapter.getTerm().size(); i++){
+                for (int i = 0; i < termAdapter.getTerms().size(); i++){
                     db.addTerm(terms.get(i), descs.get(i),
                             moduleNameInput.getText().toString().trim());
                 }
@@ -56,7 +54,8 @@ public class AddActivity extends AppCompatActivity {
         addTermBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                termAdapter.setItemCount(termAdapter.getItemCount() + 1);
+                termAdapter.getTerms().add("");
+                termAdapter.getDescs().add("");
                 termAdapter.notifyDataSetChanged();
             }
         });

@@ -86,4 +86,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    Cursor countModuleData(String moduleName) {
+        String query = "SELECT term FROM " + TABLE_NAME + " WHERE module = " + moduleName;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null){
+            cursor = db.rawQuery(query, null);
+        }
+
+        return cursor;
+    }
+
+    void deleteAllData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.execSQL("DELETE FROM " + TABLE_NAME);
+    }
 }

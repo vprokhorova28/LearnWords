@@ -3,12 +3,11 @@ package com.example.learnwords;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,14 +17,13 @@ import java.util.ArrayList;
 public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder> {
 
     private Context context;
-    private ArrayList<String> term, desc;
-    private int itemCount = 2;
+    private ArrayList<String> terms, descs;
 
 
     TermAdapter(Context context){
         this.context = context;
-        this.term = new ArrayList<>();
-        this.desc = new ArrayList<>();
+        this.terms = new ArrayList<>();
+        this.descs = new ArrayList<>();
     }
 
     @NonNull
@@ -36,61 +34,83 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
         return new TermViewHolder(view);
     }
 
-    public ArrayList<String> getTerm() {
-        return term;
+    public ArrayList<String> getTerms() {
+        return terms;
     }
 
-    public ArrayList<String> getDesc() {
-        return desc;
+    public ArrayList<String> getDescs() {
+        return descs;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TermViewHolder holder, final int position) {
-        holder.term.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    public void onBindViewHolder(@NonNull TermViewHolder holder, int position) {
+        holder.term.setText(terms.get(position));
+        holder.desc.setText(descs.get(position));
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                term.add(position, s.toString());
-            }
-        });
-        holder.desc.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                desc.add(position, s.toString());
-            }
-        });
-    }
-
-    public void setItemCount(int itemCount) {
-        this.itemCount = itemCount;
+        holder.pos = position;
     }
 
     @Override
     public int getItemCount() {
-        return itemCount;
+        return terms.size();
     }
 
     public class TermViewHolder extends RecyclerView.ViewHolder {
 
         EditText term, desc;
+        TextWatcher termTextWatcher;
+        TextWatcher descTextWatcher;
+        int pos = -1;
 
         public TermViewHolder(@NonNull View itemView) {
             super(itemView);
             term = itemView.findViewById(R.id.term_input);
             desc = itemView.findViewById(R.id.desc_input);
+
+            descTextWatcher = new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (pos != -1){
+                        terms.set(pos, s.toString());
+                    }
+                }
+            };
+            if (termTextWatcher != null){
+                term.addTextChangedListener(termTextWatcher);
+            }
+
+
+            descTextWatcher = new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (pos != -1){
+                        descs.set(pos, s.toString());
+                    }
+                }
+            };
+            if (descTextWatcher != null){
+                desc.addTextChangedListener(descTextWatcher);
+            }
         }
     }
 }

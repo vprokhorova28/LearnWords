@@ -12,7 +12,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder> {
 
@@ -33,14 +32,19 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.moduleTitle.setText(String.valueOf(modules.get(position)));
-        /*holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        DatabaseHelper db = new DatabaseHelper(context);
+
+        holder.moduleTitle.setText((modules.get(position)));
+        ///holder.termNumber.setText(db.countModuleData(modules.get(position)).getCount());
+        holder.moduleView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, LearnActivity.class);
+                intent.putExtra("moduleName", modules.get(position));
+                context.startActivity(intent);
             }
-        });*/
+        });
     }
 
     @Override
@@ -51,12 +55,13 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView moduleTitle, termNumber;
-        ConstraintLayout mainLayout;
+        ConstraintLayout moduleView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             moduleTitle = itemView.findViewById(R.id.moduleTitle);
             termNumber = itemView.findViewById(R.id.termNumber);
+            moduleView = itemView.findViewById(R.id.module);
         }
     }
 
