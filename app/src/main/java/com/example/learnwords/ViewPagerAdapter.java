@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -22,10 +24,10 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
     @NonNull
     @Override
     public ViewPagerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewPagerViewHolder(
-                LayoutInflater.from(parent.getContext()).inflate(
-                        R.layout.term_view, parent, false)
-        );
+        View view = LayoutInflater.from(parent.getContext()).inflate(
+                R.layout.term_view, parent, false);
+        view.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        return new ViewPagerViewHolder(view);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.example.learnwords;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,9 @@ import java.util.ArrayList;
 public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder> {
 
     private Context context;
-    private ArrayList<String> modules;
+    private ArrayList<Module> modules;
 
-    ModuleAdapter(Context context, ArrayList<String> modules){
+    ModuleAdapter(Context context, ArrayList<Module> modules){
         this.context = context;
         this.modules = modules;
     }
@@ -32,16 +33,19 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        final int pos = position;
         DatabaseHelper db = new DatabaseHelper(context);
+        int termNumber = modules.get(pos).getTermNumber();
+        String termForm = termNumber == 1 ? "term": "terms";
 
-        holder.moduleTitle.setText((modules.get(position)));
-        ///holder.termNumber.setText(db.countModuleData(modules.get(position)).getCount());
+        holder.moduleTitle.setText(modules.get(position).getName());
+        holder.termNumber.setText(String.format("%s %s", String.valueOf(termNumber), termForm));
         holder.moduleView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, LearnActivity.class);
-                intent.putExtra("moduleName", modules.get(position));
+                intent.putExtra("moduleName", modules.get(pos).getName());
                 context.startActivity(intent);
             }
         });

@@ -47,6 +47,7 @@ public class AddActivity extends AppCompatActivity {
                     db.addTerm(terms.get(i), descs.get(i),
                             moduleNameInput.getText().toString().trim());
                 }
+                finish();
             }
         });
 

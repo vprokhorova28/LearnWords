@@ -31,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLE_NAME +
-                " ("  + "COLUMN_ID" + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                " ("  + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_TERM + " TEXT, " +
                 COLUMN_DESCRIPTION + " TEXT, " +
                 COLUMN_MODULE + " TEXT);";
@@ -62,6 +62,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    Cursor readAllModuleData(String moduleName){
+        String query = "SELECT _id, term, description" + " FROM " + TABLE_NAME + " WHERE " +
+                COLUMN_MODULE + " IN (\"" + moduleName + "\")";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null){
+            cursor = db.rawQuery(query, null);
+        }
+
+        return cursor;
+    }
+
     Cursor readAllData(){
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -76,18 +89,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     Cursor readAllModules() {
         String query = "SELECT DISTINCT module FROM " + TABLE_NAME;
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = null;
-        if (db != null){
-            cursor = db.rawQuery(query, null);
-        }
-
-        return cursor;
-    }
-
-    Cursor countModuleData(String moduleName) {
-        String query = "SELECT term FROM " + TABLE_NAME + " WHERE module = " + moduleName;
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;

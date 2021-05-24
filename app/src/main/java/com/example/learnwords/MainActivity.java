@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,29 +12,30 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.AlarmClock;
-import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView moduleRecyclerView;
     ModuleAdapter moduleAdapter;
-    ArrayList<String> modules;
+    ArrayList<String> moduleNames;
     FloatingActionButton addBtn;
-
     DatabaseHelper db;
-    ArrayList<String> term_id, term, desc;
+    HashMap<String, ArrayList<Term>> modulesData;
+
     ImageView imageView;
     TextView noData;
 
@@ -51,12 +51,23 @@ public class MainActivity extends AppCompatActivity {
 
         db = new DatabaseHelper(MainActivity.this);
 
-        term_id = new ArrayList<>();
-        term = new ArrayList<>();
-        desc = new ArrayList<>();
-        modules = new ArrayList<>();
+        moduleNames = new ArrayList<>();
+        storeModules();
 
-        storeDataInArrays();
+        modulesData = new HashMap<>();
+        for (String module: moduleNames){
+            ArrayList<Term> moduleData = new ArrayList<>();
+            modulesData.put(module, moduleData);
+            storeModuleData(module, moduleData);
+            modulesData.put(module, moduleData);
+        }
+        ArrayList<Module> modules = new ArrayList<>();
+        for (Map.Entry entry : modulesData.entrySet()) {
+            String moduleName = entry.getKey().toString();
+            ArrayList<Term> moduleData = (ArrayList<Term>) entry.getValue();
+            int termNumber = moduleData.size();
+            modules.add(new Module(moduleName, termNumber));
+        }
 
         moduleAdapter = new ModuleAdapter(this, modules);
         moduleRecyclerView.setAdapter(moduleAdapter);
@@ -83,8 +94,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        storeModules();
     }
 
     void storeModules(){
@@ -95,24 +104,24 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             while (cursor.moveToNext()){
-                modules.add(cursor.getString(0));
+                moduleNames.add(cursor.getString(0));
                 imageView.setVisibility(View.GONE);
                 noData.setVisibility(View.GONE);
             }
         }
     }
 
-
-    void storeDataInArrays(){
-        Cursor cursor = db.readAllData();
+    void storeModuleData(String module, ArrayList<Term> moduleData){
+        Cursor cursor = db.readAllModuleData(module);
         if (cursor.getCount() == 0 ){
-
         }
         else {
             while (cursor.moveToNext()){
-                term_id.add(cursor.getString(0));
-                term.add(cursor.getString(1));
-                desc.add(cursor.getString(2));
+                String termId = cursor.getString(0);
+                String termName = cursor.getString(1);
+                String termDesc = cursor.getString(2);
+                Term term = new Term(termId, termName, termDesc);
+                moduleData.add(term);
             }
         }
     }

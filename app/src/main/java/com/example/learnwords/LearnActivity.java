@@ -14,7 +14,7 @@ import java.util.List;
 public class LearnActivity extends AppCompatActivity {
 
     ViewPager2 termViewPager;
-    ModuleAdapter adapter;
+    ViewPagerAdapter adapter;
     TextView title;
     String moduleName;
 
@@ -35,7 +35,7 @@ public class LearnActivity extends AppCompatActivity {
         terms.add("c");
         terms.add("d");
 
-        adapter = new ModuleAdapter(LearnActivity.this, terms);
+        adapter = new ViewPagerAdapter(terms);
         termViewPager.setAdapter(adapter);
         termViewPager.setClipChildren(false);
         termViewPager.setOffscreenPageLimit(3);

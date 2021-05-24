@@ -28,7 +28,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
 
     @NonNull
     @Override
-    public TermViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TermAdapter.TermViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.add_term_view, parent, false);
         return new TermViewHolder(view);
@@ -44,10 +44,12 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull TermViewHolder holder, int position) {
-        holder.term.setText(terms.get(position));
-        holder.desc.setText(descs.get(position));
+        holder.termTextWatcher.updatePosition(holder.getAbsoluteAdapterPosition());
+        holder.descTextWatcher.updatePosition(holder.getAbsoluteAdapterPosition());
 
-        holder.pos = position;
+        holder.term.setText(terms.get(holder.getAbsoluteAdapterPosition()));
+        holder.desc.setText(descs.get(holder.getAbsoluteAdapterPosition()));
+
     }
 
     @Override
@@ -58,59 +60,68 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
     public class TermViewHolder extends RecyclerView.ViewHolder {
 
         EditText term, desc;
-        TextWatcher termTextWatcher;
-        TextWatcher descTextWatcher;
-        int pos = -1;
+        TermTextWatcher termTextWatcher;
+        DescTextWatcher descTextWatcher;
 
         public TermViewHolder(@NonNull View itemView) {
             super(itemView);
-            term = itemView.findViewById(R.id.term_input);
-            desc = itemView.findViewById(R.id.desc_input);
+            this.term = itemView.findViewById(R.id.term_input);
+            this.desc = itemView.findViewById(R.id.desc_input);
 
-            descTextWatcher = new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            termTextWatcher = new TermTextWatcher();
+            term.addTextChangedListener(termTextWatcher);
 
-                }
+            descTextWatcher = new DescTextWatcher();
+            desc.addTextChangedListener(descTextWatcher);
+        }
+    }
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
+    private class TermTextWatcher implements TextWatcher {
+        private int position;
 
-                }
+        public void updatePosition(int position) {
+            this.position = position;
+        }
 
-                @Override
-                public void afterTextChanged(Editable s) {
-                    if (pos != -1){
-                        terms.set(pos, s.toString());
-                    }
-                }
-            };
-            if (termTextWatcher != null){
-                term.addTextChangedListener(termTextWatcher);
-            }
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            // no op
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            terms.set(position, charSequence.toString());
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            // no op
+        }
+    }
 
 
-            descTextWatcher = new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    private class DescTextWatcher implements TextWatcher {
+        private int position;
 
-                }
+        public void updatePosition(int position) {
+            this.position = position;
+        }
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            // no op
+        }
 
-                }
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            descs.set(position, charSequence.toString());
+        }
 
-                @Override
-                public void afterTextChanged(Editable s) {
-                    if (pos != -1){
-                        descs.set(pos, s.toString());
-                    }
-                }
-            };
-            if (descTextWatcher != null){
-                desc.addTextChangedListener(descTextWatcher);
-            }
+        @Override
+        public void afterTextChanged(Editable editable) {
+            // no op
         }
     }
 }
+
+
