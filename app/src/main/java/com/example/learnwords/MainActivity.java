@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,7 +29,7 @@ import java.util.Set;
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView moduleRecyclerView;
-    ModuleAdapter moduleAdapter;
+    static ModuleAdapter moduleAdapter;
     ArrayList<String> moduleNames;
     FloatingActionButton addBtn;
     DatabaseHelper db;
@@ -44,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setElevation(0);
 
         imageView = findViewById(R.id.imageView);
         moduleRecyclerView = findViewById(R.id.moduleRecyclerView);
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void storeModuleData(String module, ArrayList<Term> moduleData){
+     void storeModuleData(String module, ArrayList<Term> moduleData){
         Cursor cursor = db.readAllModuleData(module);
         if (cursor.getCount() == 0 ){
         }
