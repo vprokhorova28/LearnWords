@@ -1,5 +1,8 @@
 package com.example.learnwords;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class Module {
     private String name;
     private int termNumber;

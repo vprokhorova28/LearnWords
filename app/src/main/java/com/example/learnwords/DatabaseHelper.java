@@ -103,4 +103,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("DELETE FROM " + TABLE_NAME);
     }
+
+    void deleteModuleData(String moduleName){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE module IN (\"" + moduleName + "\")");
+    }
 }

@@ -24,12 +24,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView moduleRecyclerView;
-    static ModuleAdapter moduleAdapter;
+    ModuleAdapter moduleAdapter;
     ArrayList<String> moduleNames;
     FloatingActionButton addBtn;
     DatabaseHelper db;
