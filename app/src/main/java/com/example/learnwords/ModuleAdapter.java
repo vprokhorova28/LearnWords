@@ -102,15 +102,6 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewHolder
         builder.create().show();
     }
 
-    private void editModule(String moduleName) {
-        final String name = moduleName;
-        Intent intent = new Intent(context, AddActivity.class);
-        intent.putExtra("moduleNames", modules);
-        context.startActivity(intent);
-
-    }
-
-
 
     @Override
     public int getItemCount() {

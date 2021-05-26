@@ -2,7 +2,9 @@ package com.example.learnwords;
 
 import android.widget.TextView;
 
-public class SlideItem {
+import java.io.Serializable;
+
+public class SlideItem implements Serializable {
 
     private String term, desc;
 

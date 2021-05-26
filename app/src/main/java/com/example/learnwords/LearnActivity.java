@@ -45,6 +45,7 @@ public class LearnActivity extends AppCompatActivity {
         terms = new ArrayList<>();
         descs = new ArrayList<>();
 
+
         getData();
         db = new DatabaseHelper(LearnActivity.this);
         storeModuleData(moduleName, termCards);
@@ -58,7 +59,7 @@ public class LearnActivity extends AppCompatActivity {
             descs.add(item.getDesc());
         }
 
-        adapter = new ViewPagerAdapter(terms);
+        adapter = new ViewPagerAdapter(terms, descs);
         termViewPager.setAdapter(adapter);
 
         termViewPager.setClipToPadding(false);

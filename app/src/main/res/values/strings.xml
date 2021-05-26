@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LearnWords</string>
+    <string name="app_name">Learn Terms</string>
     <string name="module_title">Module title</string>
     <string name="term_number">Term number</string>
     <string name="module_name">Module name</string>
@@ -11,4 +11,11 @@
     <string name="add_first_module">Add your first module</string>
     <string name="edit_module">Edit Module</string>
     <string name="delete_module">Delete Module</string>
+    <string name="test">Test</string>
+    <string name="write">Write</string>
+    <string name="dot">•</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="type_the_answer">Type the answer</string>
+    <string name="don_t_know">Don\'t know</string>
+    <string name="check">Check</string>
 </resources>

@@ -1,24 +1,22 @@
 package com.example.learnwords;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.ViewPagerViewHolder>{
 
-    private List<String> terms;
+    private List<String> terms, descs;
 
-    ViewPagerAdapter(List<String> terms){
+    ViewPagerAdapter(List<String> terms,  List<String> descs){
         this.terms = terms;
+        this.descs = descs;
     }
 
     @NonNull
@@ -32,6 +30,7 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewPagerViewHolder holder, int position) {
         holder.termTextView.setText(terms.get(position));
+        holder.descTextView.setText(descs.get(position));
     }
 
     @Override
@@ -41,11 +40,12 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
 
     static class ViewPagerViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView termTextView;
+        private TextView termTextView, descTextView;
 
         public ViewPagerViewHolder(@NonNull View itemView) {
             super(itemView);
             termTextView = itemView.findViewById(R.id.term_textView);
+            descTextView = itemView.findViewById(R.id.desc_textView);
         }
     }
 }

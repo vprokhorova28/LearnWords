@@ -12,14 +12,17 @@
         <activity
             android:name=".LearnActivity"
             android:label=""
-            android:parentActivityName=".MainActivity">
-        </activity>
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AddActivity"
             android:label=""
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".MainActivity"
-            android:label="">
+        <activity
+            android:name=".MainActivity"
+            android:label="Modules"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
